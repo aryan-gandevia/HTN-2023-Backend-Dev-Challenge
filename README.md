@@ -12,7 +12,7 @@ Author: Aryan Gandevia
     - `source env/bin/activate` (this is for macOS)
     - `env\Scripts\activate.bat` (this is for windows)
 * To deactivate the virtual environment at any point: `deactivate` *
-- run `python -m pip install -r requirements.txt` to download what is required to run the program
+- run `python -m pip install flask`, `python -m pip install flask_sqlalchemy` and `python -m pip install flask_restful` to download what is required for the program to run
 
 
 ## RUNNING THE PROGRAM LOCALLY
