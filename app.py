@@ -1,8 +1,6 @@
 from flask import Flask
-
 from flask_sqlalchemy import SQLAlchemy # for the ORM
-from flask_restful import Api, Resource, request
-
+from flask_restful import Api, Resource, request # for the API
 import json # to read through the json file and add values to database
 
 # initalizing the application
@@ -16,6 +14,7 @@ from models import Applicant, Skills, Events # import the tables for the databse
 
 # Class to add all the data from the given JSON into the database
 class Data:
+    # this function takes all the data from the json and adds it to the database
     def add_data(self):
 
         # opens and collects the data from the json, holds it as an array of dictionaries
@@ -51,13 +50,15 @@ class Data:
             db.session.commit() # commit these additions to the database
 
 # to initialize the database
+# IMPORTANT: If you want to reset the database to have the default valeus given by the default in the folder, uncomment
+# 'db.drop.all()', 'd = Data()' and 'd.add_data()'
 with app.app_context():
-    db.drop_all()
+    # db.drop_all()
     db.create_all()
 
    # Used to add all the data from the json into the database, only needed to be run once to create the database 
-    d = Data()
-    d.add_data()
+    # d = Data()
+    # d.add_data()
 
 # initialize REST API
 api = Api(app)

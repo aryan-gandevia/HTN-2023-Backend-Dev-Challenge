@@ -35,7 +35,7 @@ Author: Aryan Gandevia
 *`<name>` is replaced with with the fullname of who you desire to find.*
 - `/events/<name>`
     - GET: Gets all the events the user has attended
-    - PUT: Adds an event to all the events the user has attended. This is the "scan" function (in JSON format)
+    - POST: Adds an event to all the events the user has attended. This is the "scan" function (in JSON format)
         - for example:
         {
             "event": "frontend developing",
