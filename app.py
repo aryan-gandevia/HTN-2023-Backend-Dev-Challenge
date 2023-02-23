@@ -52,12 +52,12 @@ class Data:
 
 # to initialize the database
 with app.app_context():
-   # db.drop_all()
+    db.drop_all()
     db.create_all()
 
    # Used to add all the data from the json into the database, only needed to be run once to create the database 
-   # d = Data()
-   # d.add_data()
+    d = Data()
+    d.add_data()
 
 # initialize REST API
 api = Api(app)
@@ -410,13 +410,20 @@ class AddOrRemoveApplicant(Resource):
         
         # if there are given skills, add them to the database
         if given_skills == True:
+            # loop through given skills and add them to database
             for m in applicant_skills:
-                skill_name = m["skill"]
-                skill_rating = m["rating"]
+                # checking if the proper information is given for each skill, and if not, return the error so they can make the applicant properly
+                try:
+                    skill_name = m['skill']
+                    skill_rating = m['rating']
+                except LookupError: # error 500 pops up if it is a lookup error
+                    db.session.delete(applicant_holder)
+                    db.session.commit()
+                    return {
+                        "message": "please input the valid fields for skills and make sure your spelling and formatting is correct"
+                    }
                 skill_user_id = applicant_id
-
-                skill_item = Skills(skill=skill_name, rating=skill_rating, user_id=skill_user_id)
-                
+                skill_item = Skills(skill=skill_name, rating=skill_rating, user_id=skill_user_id)           
                 db.session.add(skill_item)
 
         # checking if there are any events given 
@@ -428,13 +435,20 @@ class AddOrRemoveApplicant(Resource):
         
         # if there are given events, add them to the database
         if given_events == True:
+            # loop through given events and add them to database
             for m in applicant_events:
-                event_name = m["event"]
-                event_eType = m["eType"]
+                # checking if the proper information is given for each event, and if not, return the error so they can make the applicant profile properly
+                try:
+                    event_name = m["event"]
+                    event_eType = m["eType"]
+                except LookupError: # error 500 will pop up, and except usually doesnt catch up for this, so add 'LookupError'
+                    db.session.delete(applicant_holder)
+                    db.session.commit()
+                    return {
+                        "message": "please input the valid fields for events and make sure your spelling and formatting is correct"
+                    }
                 event_user_id = applicant_id
-
-                event_item = Events(event=event_name, eType=event_eType, user_id=event_user_id)
-                
+                event_item = Events(event=event_name, eType=event_eType, user_id=event_user_id)        
                 db.session.add(event_item)
         
         db.session.commit() # add the new Events and Skills to the database
