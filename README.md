@@ -1,4 +1,5 @@
-Author: Aryan Gandevia
+# Applicant Database
+This REST API service was created for the Hack the North 2023 Backend Developer Challenge.
 
 ## LOCAL SETUP
 - Instal Python 3.10.0
